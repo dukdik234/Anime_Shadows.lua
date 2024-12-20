@@ -358,7 +358,6 @@ do
                 Content = "The Possition Is Sets!",
                 Duration = 8
             })
-            
             print(Set_Position,Set_Maps)
         end
     })
@@ -792,7 +791,7 @@ task.spawn(function()
                     if Old_Farm_Value then 
                         getgenv().Setting.Auto_Farm = false 
                     end
-                    if OldTp_Tpeggvalue then 
+                    if OldTp_Tpeggvalue  then 
                         getgenv().Setting.Tp_Toeggs = false 
                     end
       
@@ -905,29 +904,23 @@ task.spawn(function()
                             [3] = "Teleport",
                             [4] = tostring(Last_Map)
                         }
-                        
-                        local function restoreSettings()
-                           
-                            if Old_Farm_Value then 
-                                getgenv().Setting.Auto_Farm = true 
-                            end
-                            if OldTp_Tpeggvalue then 
-                                getgenv().Setting.Tp_Toeggs = true 
-                            end
-                        end
-                        
-                        local function teleportPlayer()
-                            if getgenv().Setting.Leave_Method == "Set Position" then
-                                Char:FindFirstChild("HumanoidRootPart").CFrame = Set_Position
-                            else
-                                Char:FindFirstChild("HumanoidRootPart").CFrame = LastPosition
-                            end
-                            restoreSettings()
-                        end
-
-                      
                         Rep:WaitForChild("Remotes"):WaitForChild("Bridge"):FireServer(unpack(args))
-                        task.delay(0.5, teleportPlayer)
+                        task.delay(0.5, function()
+                            task.spawn(function()
+                                if getgenv().Setting.Leave_Method == "Set Position" then
+                                    Char:FindFirstChild("HumanoidRootPart").CFrame = Set_Position
+                                else
+                                    Char:FindFirstChild("HumanoidRootPart").CFrame = LastPosition
+                                end
+                                if Old_Farm_Value  then 
+                                    
+                                    getgenv().Setting.Auto_Farm = true 
+                                end
+                                if OldTp_Tpeggvalue   then 
+                                    getgenv().Setting.Tp_Toeggs = true 
+                                end
+                            end)
+                        end)
                     end
                 else
                     return
@@ -961,10 +954,10 @@ task.spawn(function()
                 if IS_Trial or Trail_value or Trail_value == true and not Join_Trail then
                     Join_Trail = true
                     
-                    if Old_Farm_Value then 
+                    if Old_Farm_Value  then 
                         getgenv().Setting.Auto_Farm = false 
                     end
-                    if OldTp_Tpeggvalue then 
+                    if OldTp_Tpeggvalue  then 
                         getgenv().Setting.Tp_Toeggs = false 
                     end
                     
@@ -1080,19 +1073,21 @@ task.spawn(function()
                             [4] = tostring(Last_Map)
                         }
                         Rep:WaitForChild("Remotes"):WaitForChild("Bridge"):FireServer(unpack(args))
-
-                        task.delay(.5,function()
-                            if getgenv().Setting.Leave_Method == "Set Position" then
-                                Char:FindFirstChild("HumanoidRootPart").CFrame = Set_Position
-                            else
-                                Char:FindFirstChild("HumanoidRootPart").CFrame = LastPosition
-                            end
-                            if Old_Farm_Value then 
-                                getgenv().Setting.Auto_Farm = true 
-                            end
-                            if OldTp_Tpeggvalue then 
-                                getgenv().Setting.Tp_Toeggs = true 
-                            end
+                        task.delay(0.5, function()
+                            task.spawn(function()
+                                if getgenv().Setting.Leave_Method == "Set Position" then
+                                    Char:FindFirstChild("HumanoidRootPart").CFrame = Set_Position
+                                else
+                                    Char:FindFirstChild("HumanoidRootPart").CFrame = LastPosition
+                                end
+                                if Old_Farm_Value then 
+                                    --print(1123)
+                                    getgenv().Setting.Auto_Farm = true 
+                                end
+                                if OldTp_Tpeggvalue then 
+                                    getgenv().Setting.Tp_Toeggs = true 
+                                end
+                            end)
                         end)
                         
                     end
